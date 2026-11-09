@@ -1,2 +1,2 @@
-# Optional native system certificate verification. TLS verification stays enabled.
+# 시스템 인증서 확인을 위한 선택 의존성입니다. TLS 인증서 확인은 항상 켜져 있습니다.
 truststore>=0.10,<0.11

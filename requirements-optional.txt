@@ -1,2 +1,2 @@
-# Only for PDF text extraction. The core app uses Python's standard library.
+# PDF 텍스트 추출용 선택 의존성입니다. 기본 앱은 Python 표준 라이브러리를 사용합니다.
 pypdf>=6.0,<7
