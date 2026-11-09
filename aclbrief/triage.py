@@ -1,6 +1,6 @@
 """Deadline first, title second. Only confirmed open candidates get document analysis."""
 import re
-from datetime import datetime, time, timedelta
+from datetime import datetime
 from .screening import KST, fingerprint
 
 COMM_TITLE = re.compile(r'통신|전파|주파수|무선|유선|위성|안테나|네트워크|네트웍|파형|다중반송파|비직교\s*전송|심볼\s*검출|간섭\s*(분석|제거)|광\s*전송|빔\s*(탐색|포밍|관리)|다중\s*안테나|채널\s*(추정|모델|예측)|(?:^|[^a-z0-9])(?:RF|RAN|MIMO|CSI|OFDM|OTFS|AFDM|FTN|5G|6G|V2X|ISAC|NTN|SDR|wireless|telecommunications?|communications?|spectrum|antenna|beamforming|channel|network)(?:$|[^a-z0-9])', re.I)

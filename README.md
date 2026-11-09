@@ -4,7 +4,7 @@
 
 마감 확인과 제목 선별로 검토 대상을 좁히고, 공고문·RFP의 연구 요구를 공개 연구 주제·논문·사업 실적과 연결합니다. **선택형 GPT API 의미 심사와 원문 인용·연구 그래프 검증**을 결합했으며, API 없이 사용하는 규칙 모드도 제공합니다.
 
-Python · 로컬 웹 대시보드 · OpenAI Responses API(선택) · v0.7.0
+Python · 로컬 웹 대시보드 · OpenAI Responses API(선택) · v0.7.1
 
 ## 실행 화면
 
@@ -78,7 +78,7 @@ python start_gpt.py serve
 
 ## 검증 결과와 현재 범위
 
-- **Python unittest 255개와 UI 계약·JavaScript 문법 검사 통과.** [검증 기록](docs/VALIDATION.md) · [실행 로그](docs/validation-log.txt) · [GitHub Actions](https://github.com/Lasche01/acl-research-radar/actions)
+- **Python unittest 252개와 UI 계약·JavaScript 문법 검사 통과.** [검증 기록](docs/VALIDATION.md) · [실행 로그](docs/validation-log.txt) · [GitHub Actions](https://github.com/Lasche01/acl-research-radar/actions)
 - **GPT API 시험은 모의 응답 사용.** 실제 Key로 호출한 모델별 추천 정확도·비용·속도는 아직 검증하지 않았습니다. [Key 없는 API 통합 재현](examples/verify_gpt_workflow.py)
 - **실제 운영 결과와 합성 시험을 구분.** v0.6.0 사용자 진단에서는 관련 후보 1건·확정 추천 0건이었고, 가점 조건·연구 문맥 추출의 잔여 오류를 확인했습니다. [운영 결과의 해석](docs/CASE_STUDY.md#운영-결과의-해석)
 
@@ -92,6 +92,7 @@ python start_gpt.py serve
 | 문서 역할·규칙 심사 | [documents.py](aclbrief/documents.py), [rule_evidence.py](aclbrief/rule_evidence.py), [rules.py](aclbrief/rules.py) |
 | GPT API·인용·그래프 검증 | [screening.py](aclbrief/screening.py), [matcher.py](aclbrief/matcher.py) |
 | 저장·브리핑·웹 화면 | [store.py](aclbrief/store.py), [service.py](aclbrief/service.py), [static](aclbrief/static) |
+| 변경 이력 | [버전별 변경 기록](docs/CHANGELOG.md) |
 | 문제 해결 과정과 검증 | [개발 사례](docs/CASE_STUDY.md), [역할](docs/DEVELOPMENT.md), [검증](docs/VALIDATION.md) |
 | 실행과 공개 자료 점검 | [사용 방법](docs/USAGE.md), [GPT 설정](docs/GPT_API.md), [공개 점검](docs/PUBLICATION_CHECK.md) |
 

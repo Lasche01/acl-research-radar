@@ -1,5 +1,5 @@
-ACL Research Radar v0.7.0 — local verification
-UTC: 2026-11-09T02:26:10.333493+00:00
+ACL Research Radar v0.7.1 — local verification
+UTC: 2026-11-09T04:25:17.570870+00:00
 Python: 3.12.14
 Live OpenAI API calls: 0 (mock responses only)
 
@@ -11,7 +11,7 @@ exit_code=0
 $ python -m unittest discover -s tests -q
 
 ----------------------------------------------------------------------
-Ran 255 tests in 3.495s
+Ran 252 tests in 3.582s
 
 OK
 exit_code=0

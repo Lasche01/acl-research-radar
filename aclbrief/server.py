@@ -1,6 +1,5 @@
 import base64
 import json
-import mimetypes
 import threading
 import traceback
 import urllib.parse

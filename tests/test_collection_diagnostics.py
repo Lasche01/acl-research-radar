@@ -8,7 +8,8 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 from unittest.mock import patch, Mock
-from aclbrief.collect import Fetcher, FetchError, certificate_context, collect_source
+from aclbrief.collect import Fetcher, FetchError, certificate_context
+from aclbrief.incremental import collect_incremental
 from aclbrief.diagnostics import classify_error, summarize_sources
 from aclbrief.service import Service
 from aclbrief.store import Store
@@ -87,13 +88,14 @@ class DiagnosticTests(unittest.TestCase):
     def test_general_review_note_does_not_mark_collection_partial(self):
         class F:
             def fetch(self, url):
-                content = '<a href="/view/1">과제 연구 공고</a>' if url.endswith('/list') else '<html><body>' + '연구 목표와 채널 추정 성과물의 확인이 필요합니다. '*12 + '</body></html>'
+                content = '<a href="/view/1">통신 과제 연구 공고</a>' if url.endswith('/list') else '<html><body><p>신청 마감일: 2099년 12월 31일</p>' + '연구 목표와 채널 추정 성과물의 확인이 필요합니다. '*12 + '</body></html>'
                 return content.encode(), {}, url
-        r = collect_source({'id':'test','url':'https://example.org/list','detail_pattern':'/view/'}, F(), lambda p:{'saved':True})
+        captured=[]
+        r = collect_incremental({'id':'test','url':'https://example.org/list','detail_pattern':'/view/'}, F(), lambda p:captured.append(p), None, lambda c:None)
         self.assertEqual(r['status'], 'success')
         self.assertEqual(r['error'], '')
-        self.assertTrue(r['notes'])
-        self.assertEqual(r['coverage'], 'first_page_only')
+        self.assertTrue(captured[0]['warnings'])
+        self.assertEqual(r['coverage'], 'incremental_bounded')
 
     def test_partial_with_saved_details_updates_last_success(self):
         self.svc.store.source_result('kca', 'partial', 10, '4/10', {'code':'coverage_limited','processed':4})

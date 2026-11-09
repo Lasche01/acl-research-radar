@@ -7,8 +7,6 @@ from .documents import deadline_evidence, document_sections, screening_warnings
 from .triage import title_screen, period_from_text
 from .rule_evidence import evidence_units, technical_units, eligibility_evidence, alias_in, RELATED
 
-class RulesOnly:
-    def status(self):return {'configured':False}
 
 INDUSTRY=r'조선|모델하우스|스마트공장|제조\s*AI|안전관리|광원\s*소자|반도체\s*공정|에피택셜|패키징'
 CALL=r'(?:연구개발|연구\s*과제|위탁\s*연구|공동\s*연구|연구\s*용역|RFP).{0,120}(?:모집|공모|입찰)|신규\s*(?:지원\s*)?(?:대상\s*)?과제.{0,80}(?:모집|공고|공모)|(?:지원\s*대상|수행\s*기관).{0,70}(?:공모|모집)'
@@ -46,7 +44,7 @@ class RuleReviewer(Reviewer):
         elif re.search(INDUSTRY,payload.get('title','')):
             setgate('communications',find(INDUSTRY),'산업 응용·소자·구축 요구가 중심이며 핵심 통신 연구 요구를 확인하지 못했습니다.','no')
 
-        matcher=Matcher(profile,RulesOnly());links=[];topic_matches=[]
+        matcher=Matcher(profile);links=[];topic_matches=[]
         for tid,topic in matcher.topics.items():
             if topic.get('enabled') is False or not matcher.paths.get(tid):continue
             direct=next((u for u in core if any(alias_in(a,u['quote']) for a in matcher.aliases(tid))),None)

@@ -9,8 +9,9 @@ import urllib.request
 import zipfile
 from pathlib import Path
 from unittest.mock import patch
-from aclbrief.collect import collect_source, extract_file, PageParser, public_url, page_payload
-from aclbrief.matcher import Matcher, LocalAI, cosine, term_in, validate_profile
+from aclbrief.collect import extract_file, public_url
+from aclbrief.incremental import collect_incremental
+from aclbrief.matcher import Matcher, term_in, validate_profile
 from aclbrief.service import Service, DEMO
 from aclbrief.server import AppServer
 from aclbrief.store import canonical_url
@@ -132,15 +133,18 @@ class AppTests(unittest.TestCase):
 
     def test_dynamic_empty_list_is_not_zero_success(self):
         config={'url':'https://example.org/list','id':'test','detail_pattern':'/view'}
-        result=collect_source(config,FixtureFetcher({config['url']:'<html><body><div id="app"></div></body></html>'}),lambda p:None)
-        self.assertEqual(result['status'],'review')
-        self.assertIn(' 신규 0건',result['error'])
+        result=collect_incremental(config,FixtureFetcher({config['url']:'<html><body><div id="app"></div></body></html>'}),lambda p:None,None,lambda c:None)
+        self.assertEqual(result['status'],'failed')
+        self.assertEqual(result['list_error'],'detail_links_missing')
+        self.assertIn('빈 목록인지 추출 실패인지',result['error'])
 
     def test_collection_limits_and_attachment_failure_are_visible(self):
-        root='https://example.org';page='<html><body><main>'+'이동통신 채널 추정 요구사항. '*15+'<a href="/download/test.hwp">과제.hwp</a></main></body></html>'
-        f=FixtureFetcher({root+'/list':'<a href="/view/1">공고 제목 일</a><a href="/view/2">공고 제목 이</a>',root+'/view/1':page,root+'/download/test.hwp':b'\xd0\xcf\x11\xe0'})
-        result=collect_source({'url':root+'/list','id':'test','detail_pattern':'/view/'},f,self.service.ingest,limit=1)
+        root='https://example.org';page='<html><body><main><p>신청 마감일: 2099년 12월 31일</p>'+'이동통신 채널 추정 요구사항. '*15+'<a href="/download/test.hwp">과제.hwp</a></main></body></html>'
+        f=FixtureFetcher({root+'/list':'<a href="/view/1">통신 연구 공고 일</a><a href="/view/2">통신 연구 공고 이</a>',root+'/view/1':page,root+'/download/test.hwp':b'\xd0\xcf\x11\xe0'})
+        result=collect_incremental({'url':root+'/list','id':'test','detail_pattern':'/view/'},f,self.service.ingest,None,lambda c:None,limit=1)
         self.assertEqual(result['status'],'partial');self.assertEqual(result['processed'],1)
+        self.assertEqual(result['pending_details'],2)
+        self.assertTrue(result['attachment_errors'])
         self.assertTrue(self.service.store.notices()[0]['analysis']['warnings'])
 
     def test_hwpx_extraction_preserves_paragraphs(self):
@@ -164,32 +168,6 @@ class AppTests(unittest.TestCase):
         self.assertEqual(r['status'],'needs_review')
         self.assertEqual(next(s for s in self.service.store.sources() if s['id']=='add')['status'],'failed')
 
-    def test_ai_unverifiable_quotes_are_rejected(self):
-        class AI:
-            def status(self):return {'configured':True}
-            def embed(self,texts):return [[1.,0.] for t in texts]
-            def judge(self,text,candidates,topics):return {'mappings':[{'quote':'fabricated quote never in source','evidence_id':'c2025beam','topic_id':'beam','strength':'direct','reason':'fake','gap':''}]}
-        a=Matcher(self.service.store.get_setting('profile'),AI()).analyze(DEMO[0])
-        self.assertEqual(a['mappings'],[])
-        self.assertTrue(any('제외' in w for w in a['warnings']))
-        self.assertEqual(a['category'],'review')
-
-    def test_ai_failure_falls_back_with_visible_warning(self):
-        class AI:
-            def status(self):return {'configured':True}
-            def embed(self,texts):raise RuntimeError('model offline')
-        a=Matcher(self.service.store.get_setting('profile'),AI()).analyze(DEMO[0])
-        self.assertEqual(a['mode'],'graph_rules')
-        self.assertTrue(any('실패' in w for w in a['warnings']))
-
-    def test_ai_positive_requires_real_graph_edge_and_quote(self):
-        quote=DEMO[0]['text'].split('.')[0]+'.'
-        class AI:
-            def status(self):return {'configured':True}
-            def embed(self,texts):return [[1.,0.] for t in texts]
-            def judge(self,text,candidates,topics):return {'mappings':[{'quote':quote,'evidence_id':'c2025beam','topic_id':'beam','strength':'direct','reason':'빔 코드북 대응','gap':'실험 환경 검토'}]}
-        a=Matcher(self.service.store.get_setting('profile'),AI()).analyze(DEMO[0])
-        self.assertEqual(a['mode'],'local_semantic_graph');self.assertEqual(a['category'],'direct')
 
     def test_new_project_requires_role_and_can_join_graph(self):
         with self.assertRaises(ValueError):self.service.add_evidence({'label':'과제','type':'project','topics':['beam']})
@@ -231,8 +209,11 @@ class HTTPTests(unittest.TestCase):
         return urllib.request.urlopen(req)
 
     def test_static_and_api_boot(self):
-        with self.request('/') as r:self.assertIn('ACL Research Radar',r.read().decode())
-        with self.request('/api/state') as r:self.assertEqual(len(json.load(r)['profile']['nodes']),23)
+        with self.request('/') as r:html=r.read().decode()
+        with self.request('/api/state') as r:state=json.load(r)
+        self.assertIn('ACL Research Radar',html)
+        self.assertIn(f'id="app-version">v{state["version"]}</span>',html)
+        self.assertEqual(len(state['profile']['nodes']),23)
 
     def test_cross_origin_write_is_rejected(self):
         with self.assertRaises(urllib.error.HTTPError) as e:self.request('/api/demo',{}, {'Origin':'https://attacker.example'})

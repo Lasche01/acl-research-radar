@@ -1,5 +1,4 @@
 """Conservative public-web ingestion. Empty/dynamic pages never mean zero notices."""
-import base64
 import gzip
 import http.cookiejar
 import io
@@ -640,70 +639,3 @@ def next_pages(page, resolved, config):
             if key and ('(' in action or href.startswith('javascript:')):
                 found.append((number, query_url(resolved, **{key:number})))
     return sorted(set(found))
-
-
-def collect_source(config, fetcher, consume, limit=None, max_pages=None):
-    if limit is not None:limit=max(1,int(limit))
-    if max_pages is not None:max_pages=max(1,int(max_pages))
-    queue, visited, seen = [(1, config['url'])], set(), set()
-    links, errors, notes, changes, skipped = [], [], [], [], 0
-    pages_read, pagination_left = 0, False
-    while queue and (max_pages is None or pages_read < max_pages) and (limit is None or len(links) < limit):
-        number, address = queue.pop(0)
-        if address in visited:
-            continue
-        visited.add(address)
-        try:
-            data, headers, resolved = fetcher.fetch(address)
-            parser = PageParser(); parser.feed(decode_text(data, headers)); page = parser.result()
-            pages_read += 1
-            found, rejected = list_links(page, resolved, config)
-            skipped += rejected
-            fresh = [(u, t) for u, t in found if u not in seen]
-            # Some list endpoints ignore GET pagination: don't repeat the first page.
-            if pages_read > 1 and not fresh:
-                notes.append('다음 목록에서 새로운 게시물 번호가 확인되지 않아 페이지 탐색을 중단했습니다.')
-                pagination_left = True
-                break
-            links.extend(fresh); seen.update(u for u, _ in fresh)
-            for n, u in next_pages(page, resolved, config):
-                if n > number and u not in visited and (n, u) not in queue:
-                    queue.append((n, u))
-            queue.sort()
-        except Exception as exc:
-            if not pages_read:
-                raise
-            errors.append('목록 다음 페이지: ' + str(exc)[:180])
-            pagination_left = True
-            break
-    pagination_left = pagination_left or bool(queue) or (limit is not None and len(links) > limit)
-    if not links:
-        return {'status': 'review', 'discovered': 0, 'processed': 0, 'skipped_navigation': skipped,
-                'pages_read': pages_read, 'coverage': 'unknown', 'notes': notes,
-                'error': '상세 링크를 찾지 못했습니다. 메뉴·소개 링크는 제외했습니다. 동적 목록·안내 페이지 여부를 확인하세요. 신규 0건으로 판단하지 않습니다.', 'changes': []}
-    for url, title in links[:limit]:
-        try:
-            payload = page_payload(url, fetcher, title=title, source_id=config['id'])
-            if document_check(payload)['excluded']:
-                skipped += 1
-                continue
-            # A redirect to a list/login is not a successfully collected detail.
-            target = payload.get('collected_url', url)
-            if target != url and not has_record_id(target):
-                raise ExtractionError('상세 주소가 게시물 번호 없는 목록·안내 화면으로 이동했습니다.')
-            changes.append(consume(payload))
-            if payload['warnings']:
-                notes.append(f'{title[:50]}: 본문·이미지·첨부의 검토 안내는 공고 상세 참조')
-            for a in payload.get('attachments', []):
-                from .documents import required_record
-                if a.get('status') == 'review' and required_record(a):
-                    errors.append(f'{title[:50]}: 첨부 {a.get("name", "")} 미확보: {a.get("error", "")[:150]}')
-        except Exception as exc:
-            errors.append(f'{title[:50]}: {str(exc)[:160]}')
-    if pagination_left:
-        errors.append(f'목록 {pages_read}쪽 확인, 발견 {len(links)}건 중 {len(changes)}건 저장. 이후 페이지는 미확인입니다.')
-    status = ('failed' if not changes else 'partial') if errors else ('success' if changes else 'review')
-    return {'status': status, 'discovered': len(links), 'processed': len(changes),
-            'skipped_navigation': skipped, 'pages_read': pages_read,
-            'error': '\n'.join(errors), 'notes': notes, 'changes': changes,
-            'coverage': 'bounded_pages' if pages_read > 1 else 'first_page_only', 'limit': limit}

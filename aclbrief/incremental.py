@@ -1,6 +1,6 @@
 """Persistent bounded discovery/detail queue. Every run revisits the newest list."""
 import time
-from .collect import PageParser, decode_text, list_links, list_candidates, next_pages, page_payload, ExtractionError
+from .collect import PageParser, decode_text, list_candidates, next_pages, page_payload, ExtractionError
 from .notices import document_check, has_record_id
 from .screening import fingerprint
 from .store import canonical_url

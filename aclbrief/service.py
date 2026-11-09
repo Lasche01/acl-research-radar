@@ -4,8 +4,8 @@ import threading
 import uuid
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from .collect import Fetcher, collect_source, page_payload
-from .matcher import Matcher, LocalAI, validate_profile
+from .collect import Fetcher
+from .matcher import Matcher, validate_profile
 from .store import Store, now, canonical_url
 from .screening import Reviewer, effective_screening, fingerprint
 from .rules import RuleReviewer
@@ -37,17 +37,13 @@ class Service:
         self.store.seed(json.loads((BASE/'data/profile.json').read_text(encoding='utf-8')), json.loads((BASE/'data/sources.json').read_text(encoding='utf-8')))
         self.fetcher = fetcher or Fetcher()
         self.lock = TaskLock(self.store.directory)
-        self.ai = LocalAI()
         self.reviewer = Reviewer(enabled=True) if reviewer_mode == 'openai' else RuleReviewer()
         self.cancel_event = threading.Event()
         self.collection_progress = {}
         if isinstance(self.fetcher, Fetcher):self.fetcher.cancel_event = self.cancel_event
 
     def matcher(self):
-        class RulesOnly:
-            def status(self):
-                return {'configured': False}
-        return Matcher(self.store.get_setting('profile'), RulesOnly())
+        return Matcher(self.store.get_setting('profile'))
 
     def analyze(self, payload, previous=None):
         matcher = self.matcher()

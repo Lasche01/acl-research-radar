@@ -1,6 +1,5 @@
 """Deterministic document metadata; preserve literal source quotes."""
 import re
-from datetime import datetime
 PRIMARY=r'RFP|제안요청|공고문|공모문|제안서\s*공모|과제.{0,5}(설명|내용|요구)|연구개발계획서\s*공모'
 FORM=r'양식|서식|참여\s*인력\s*현황|개인정보.{0,8}동의|확약서|증빙|체크리스트|참고\s*자료|매뉴얼|작성\s*(요령|지침|안내)|절차\s*설명'
 REFERENCE=r'법률|시행령|시행규칙|국가연구개발혁신법|연구개발비\s*사용\s*기준|사업\s*관리\s*규정'

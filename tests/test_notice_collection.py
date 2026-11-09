@@ -7,7 +7,8 @@ import unittest
 import zlib
 from pathlib import Path
 from unittest.mock import Mock,patch
-from aclbrief.collect import PageParser, BodyParser, list_links, next_pages, attachment_address, collect_source, extract_file, Fetcher
+from aclbrief.collect import PageParser, BodyParser, list_links, next_pages, attachment_address, extract_file, Fetcher
+from aclbrief.incremental import collect_incremental
 from aclbrief.notices import document_check, has_record_id
 from aclbrief.service import Service, DEMO
 from aclbrief.diagnostics import classify_error
@@ -84,24 +85,28 @@ class CollectionRegression(unittest.TestCase):
         pages={root:''.join(f'<a href="/view/{i}">통신 연구 공고 {i}</a>' for i in range(1,7))+'<a href="?page=2">2</a>',
                root+'?page=2':'<a href="/view/7">통신 연구 공고 7</a><a href="?page=3">3</a>',
                root+'?page=3':'<a href="/view/8">통신 연구 공고 8</a><a href="?page=4">4</a>'}
-        for i in range(1,9):pages[f'https://example.org/view/{i}']='<p>'+DEMO[0]['text']+'</p>'
+        for i in range(1,9):pages[f'https://example.org/view/{i}']='<p>신청 마감일: 2099년 12월 31일</p><p>'+DEMO[0]['text']+'</p>'
         class F:
             def fetch(self,url):return pages[url].encode(),{},url
-        r=collect_source({'id':'test','url':root},F(),self.svc.ingest)
+        checkpoint={}
+        r=collect_incremental({'id':'test','url':root},F(),self.svc.ingest,None,checkpoint.update,max_pages=3)
         self.assertEqual((r['pages_read'],r['processed']),(3,8));self.assertEqual(r['status'],'partial')
-        self.assertIn('이후 페이지는 미확인',r['error'])
+        self.assertEqual(r['pending_pages'],1)
+        self.assertEqual(checkpoint['pages'],[(4,root+'?page=4')])
     def test_ignored_get_pagination_is_not_claimed_complete(self):
         class F:
             def fetch(self,url):
-                html='<a href="/view/1">연구기관 모집 공고</a><a href="?page=2">2</a>' if '/list' in url else '<p>'+DEMO[0]['text']+'</p>'
+                html='<a href="/view/1">통신 연구기관 모집 공고</a><a href="?page=2">2</a>' if '/list' in url else '<p>신청 마감일: 2099년 12월 31일</p><p>'+DEMO[0]['text']+'</p>'
                 return html.encode(),{},url
-        r=collect_source({'id':'test','url':'https://example.org/list'},F(),self.svc.ingest)
+        r=collect_incremental({'id':'test','url':'https://example.org/list'},F(),self.svc.ingest,None,lambda c:None)
         self.assertEqual(r['processed'],1);self.assertEqual(r['status'],'partial')
+        self.assertEqual(r['list_error'],'pagination_repeated')
     def test_only_menus_is_review_not_success(self):
         class F:
             def fetch(self,url):return '<a href="/view?menuSeq=1">전체선택됨</a><a href="/ViewIntro.do">DTiMS 소개</a>'.encode(),{},url
-        r=collect_source(self.configs['dtims'],F(),self.svc.ingest)
-        self.assertEqual(r['status'],'review');self.assertEqual(r['processed'],0)
+        r=collect_incremental(self.configs['dtims'],F(),self.svc.ingest,None,lambda c:None)
+        self.assertEqual(r['status'],'failed');self.assertEqual(r['processed'],0)
+        self.assertEqual(r['list_error'],'detail_links_missing')
     def test_article_body_omits_menu_research_terms(self):
         p=BodyParser();p.feed('<div>OTFS 채널 추정 메뉴</div><div class="view-cont"><p>'+'소자 제작 요구사항입니다. '*12+'</p></div>')
         self.assertNotIn('OTFS',p.result());self.assertIn('소자 제작',p.result())
