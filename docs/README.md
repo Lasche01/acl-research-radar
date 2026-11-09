@@ -1,6 +1,6 @@
 # 문서 안내
 
-이 문서는 ACL Research Radar의 사용·개발·테스트 가이드를 안내합니다. 처음 실행한다면 [빠른 시작](../README.md#빠른-시작), 실행 중 문제가 있다면 [문제 해결](TROUBLESHOOTING.md)부터 확인하세요.
+처음 실행한다면 [빠른 시작](../README.md#빠른-시작), 개발 과정이 궁금하다면 [개발 사례](CASE_STUDY.md), 실행 중 문제가 있다면 [문제 해결](TROUBLESHOOTING.md)부터 확인하세요.
 
 ## 사용 가이드
 
