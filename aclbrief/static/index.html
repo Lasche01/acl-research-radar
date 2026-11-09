@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ACL Research Radar</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="/" aria-label="ACL Research Radar 홈"><span class="brandmark">a<span>c</span>l</span><div>RESEARCH RADAR<small>Yonsei · Advanced Communications Lab</small></div></a>
+  <div class="nav-label">WORKSPACE</div>
+  <nav id="navigation">
+    <button data-view="inbox" class="nav-item active"><span>◫</span> 공고 검토함 <b id="nav-count">0</b></button>
+    <button data-view="graph" class="nav-item"><span>⌘</span> 연구 연결 지도</button>
+    <button data-view="sources" class="nav-item"><span>↗</span> 수집 경로</button>
+    <button data-view="evaluation" class="nav-item"><span>▥</span> 판단 기록·평가</button>
+    <button data-view="profile" class="nav-item"><span>▦</span> 연구실 프로필</button>
+  </nav>
+  <div class="sidebar-bottom"><div class="local-label"><span></span> LOCAL WORKSPACE</div><p>연구 실적에서 출발해<br>관련 있는 기회를 찾습니다.</p><span id="sidebar-mode">기본 그래프 규칙</span></div>
+</aside>
+<main>
+  <header class="topbar"><div><span class="eyebrow">ACL / OPPORTUNITY INTELLIGENCE</span></div><div class="top-actions"><span id="clock"></span><a href="/api/export" class="quiet">전체 내보내기 ↓</a></div></header>
+  <section class="page-heading"><div><div class="eyebrow teal">RESEARCH → EVIDENCE → OPPORTUNITY</div><h1 id="page-title">연구와 연결되는 기회.</h1><p id="page-subtitle">공고의 요구사항과 우리 연구실의 실적을 함께 검토하세요.</p></div><div class="heading-actions"><button id="collect-btn" class="secondary">↻ 공고 수집</button><button id="add-btn" class="primary">＋ 공고 추가</button></div></section>
+  <div id="activity" class="activity hidden" role="status"></div>
+  <div id="app"></div>
+  <footer>ACL Research Radar · v0.5.0 <span>공개 목록 기반 초기 프로필 · 신청 전 원문 확인</span></footer>
+</main>
+<dialog id="add-dialog"><form id="import-form"><div class="dialog-header"><div><span class="eyebrow">ADD OPPORTUNITY</span><h2>검토할 공고 추가</h2></div><button class="icon close" type="button" aria-label="닫기">×</button></div>
+<div class="tabs" id="import-tabs"><button class="tab active" data-mode="text" type="button">본문 입력</button><button class="tab" data-mode="url" type="button">URL 수집</button><button class="tab" data-mode="file" type="button">파일 입력</button></div>
+<label>공고·세부 과제명<input name="title" placeholder="연구개발 과제명을 입력하세요" maxlength="400"></label>
+<div class="form-row"><label>분석 단위<select name="scope"><option value="rfp">세부 RFP 하나</option><option value="notice">통합공고 / 세부 RFP 미분리</option></select></label><label>세부 RFP 식별자<input name="unit" placeholder="예: RFP-03 (선택)"></label></div>
+<label>원문 URL<input name="url" type="url" placeholder="https://..."></label>
+<label id="text-input">연구 목표·요구사항 원문<textarea name="text" rows="8" placeholder="가능하면 세부 RFP 하나의 연구 목표, 필수 기술, 성과물을 입력하세요. 여러 과제는 나눠 입력하세요."></textarea></label>
+<label id="file-input" class="hidden">RFP 파일<input name="file" type="file" accept=".txt,.md,.pdf,.hwp,.hwpx,.docx,.html"><small>고정 용량 제한 없음 · PDF는 pypdf 설치 필요 · HWP 5 텍스트 지원 · 이미지 OCR 미지원</small></label>
+<div id="manual-fields"><div class="form-row"><label>마감일시 (한국시간, 선택)<input name="deadline" type="datetime-local"></label><label>신청 자격<select name="eligibility"><option value="unknown">미확인</option><option value="eligible">사용자가 신청 가능 확인</option><option value="ineligible">사용자가 신청 불가 확인</option></select></label></div><label>신청 자격 판단 근거<input name="eligibility_note" placeholder="확인한 원문 문구·법령·페이지"></label></div>
+<p class="form-note">관련성과 신청 자격을 별도로 기록합니다. 기존 URL과 식별자가 같으면 원문 변경을 추적합니다.</p><div class="dialog-footer"><button class="secondary close" type="button">취소</button><button class="primary" type="submit">추가하고 분석</button></div></form></dialog>
+<dialog id="capture-dialog"><form id="capture-form"><div class="dialog-header"><h2>브라우저에서 확보한 자료 가져오기</h2><button class="icon close" type="button" aria-label="닫기">×</button></div>
+<p class="form-note">브라우저에서 복사한 공고 본문, 저장한 HTML, 내려받은 공고문·RFP를 추가하세요. 이 작업은 사이트에 접속하지 않습니다. 서로 다른 과제는 나누어 가져오세요.</p>
+<input name="notice_id" type="hidden"><label>공고·과제명<input name="title" required></label><label>원문 URL<input name="url" type="url"></label>
+<div class="form-row"><label>분석 단위<select name="scope"><option value="rfp">세부 RFP 하나</option><option value="notice">통합공고 / 미분리</option></select></label><label>세부 과제 식별자<input name="unit"></label></div>
+<label>직접 복사한 공고 본문<textarea name="text" rows="7" placeholder="본문을 제공하면 이전 자동 추출 본문을 새 본문으로 교체합니다. 파일만 추가하면 기존 본문에 보완합니다."></textarea></label>
+<label>공고문·RFP·저장 HTML (여러 파일 가능)<input name="files" type="file" multiple accept=".txt,.md,.html,.htm,.pdf,.hwp,.hwpx,.docx,.zip"><small>고정 용량·파일 수 제한 없이 순차 전송합니다. 이미지 OCR 미지원. ZIP에 여러 과제가 있으면 분리해 입력하세요.</small></label>
+<label><input name="replace_missing" type="checkbox">기존에 미확보된 필수 자료를 이 본문·파일로 모두 제공했음</label>
+<p class="form-note">기존 공고 상세에서 시작하면 원문 이력을 보존하며 같은 공고를 보완합니다. 부족한 자격·연구 요구·마감을 추측해 채우지 않습니다.</p>
+<button class="primary" type="submit">가져오고 다시 심사</button></form></dialog>
+<dialog id="evidence-dialog"><form id="evidence-form"><div class="dialog-header"><div><span class="eyebrow">LAB EVIDENCE</span><h2>논문·수행 사업 추가</h2></div><button class="icon close" type="button" aria-label="닫기">×</button></div>
+<label>실적명<input name="label" required></label><div class="form-row"><label>유형<select name="type"><option value="project">수행 사업</option><option value="publication">논문</option><option value="patent">특허</option></select></label><label>연도<input name="year" type="number" min="1900" max="2100" required></label></div>
+<label>출처 URL<input name="url" type="url" placeholder="https://..."></label><div class="form-row"><label>발주기관 / 지원기관<input name="sponsor"></label><label>연구실 역할<input name="role" placeholder="예: 위탁기관, 채널 추정 알고리즘"></label></div><label>수행 기간<input name="period" placeholder="예: 2024.03~2026.02"></label><label>연구 내용·기여·성과<textarea name="abstract" rows="4"></textarea></label><fieldset><legend>연결할 연구 주제</legend><div id="topic-checkboxes" class="check-grid"></div></fieldset><div class="dialog-footer"><button class="secondary close" type="button">취소</button><button class="primary" type="submit">실적 저장</button></div></form></dialog>
+<dialog id="detail-dialog" class="wide"><div id="detail-content"></div></dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+</body></html>

@@ -1,0 +1,93 @@
+ACL Research Radar v0.7.0 — local verification
+UTC: 2026-11-09T02:26:10.333493+00:00
+Python: 3.12.14
+Live OpenAI API calls: 0 (mock responses only)
+
+$ git diff --check
+
+
+exit_code=0
+
+$ python -m unittest discover -s tests -q
+
+----------------------------------------------------------------------
+Ran 255 tests in 3.495s
+
+OK
+exit_code=0
+
+$ node --check aclbrief/static/app.js
+
+
+exit_code=0
+
+$ node tests/test_ui_filters.js
+UI filter contract passed: title, period, detailed review, recommendation and preserved all-record view.
+GPT mode UI contract passed: actual mode, escaped model, request counts and external transmission notice.
+
+exit_code=0
+
+$ python examples/verify_evidence.py
+{
+  "synthetic_examples_only": true,
+  "results": {
+    "synthetic_control": {
+      "decision": "recommended",
+      "research_score": 100,
+      "eligibility": "yes",
+      "related_candidate": false
+    },
+    "same_goal_with_announcement_word": {
+      "decision": "recommended",
+      "research_score": 100,
+      "eligibility": "yes",
+      "related_candidate": false
+    },
+    "missing_eligibility": {
+      "decision": "review",
+      "research_score": 100,
+      "eligibility": "unknown",
+      "related_candidate": true
+    },
+    "enterprise_guarantee_exemption": {
+      "decision": "recommended",
+      "research_score": 100,
+      "eligibility": "yes",
+      "related_candidate": false
+    },
+    "known_limit_bonus_wording": {
+      "decision": "review",
+      "research_score": 100,
+      "eligibility": "unknown",
+      "related_candidate": true
+    }
+  }
+}
+
+exit_code=0
+
+$ python examples/verify_gpt_workflow.py
+{
+  "mock_only": true,
+  "live_api_calls": 0,
+  "results": {
+    "verified_quotes_and_path": {
+      "decision": "recommended",
+      "validated": true,
+      "related_candidate": false
+    },
+    "invented_quote": {
+      "decision": "review",
+      "validated": false,
+      "related_candidate": false
+    },
+    "unknown_eligibility": {
+      "decision": "review",
+      "validated": true,
+      "related_candidate": true
+    }
+  }
+}
+
+exit_code=0
+

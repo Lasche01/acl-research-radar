@@ -1,0 +1,2 @@
+# Only for PDF text extraction. The core app uses Python's standard library.
+pypdf>=6.0,<7

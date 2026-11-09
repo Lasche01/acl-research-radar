@@ -1,0 +1,468 @@
+{
+  "schema_version": "0.1",
+  "as_of_kst": "2026-11-05",
+  "lab": {
+    "name": "연세대학교 차세대 통신 연구실",
+    "english_name": "Advanced Communications Laboratory",
+    "url": "https://aclab.yonsei.ac.kr/"
+  },
+  "scope": "선별한 공개 목록 기반 초기 그래프. 전체 연구실 실적 데이터베이스가 아님.",
+  "sources": [
+    {
+      "id": "research",
+      "url": "https://aclab.yonsei.ac.kr/research",
+      "scope": "연구 분야 소개"
+    },
+    {
+      "id": "journal",
+      "url": "https://aclab.yonsei.ac.kr/publications/journal",
+      "scope": "학술지 목록"
+    },
+    {
+      "id": "conference",
+      "url": "https://aclab.yonsei.ac.kr/publications/conference",
+      "scope": "학회 목록"
+    },
+    {
+      "id": "patents",
+      "url": "https://aclab.yonsei.ac.kr/publications/patents",
+      "scope": "특허 목록"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "waveform",
+      "type": "research_topic",
+      "label": "파형·다중반송파"
+    },
+    {
+      "id": "ftn",
+      "type": "research_topic",
+      "label": "FTN·비직교 전송"
+    },
+    {
+      "id": "otfs",
+      "type": "research_topic",
+      "label": "OTFS·지연 도플러 영역 전송"
+    },
+    {
+      "id": "beam",
+      "type": "research_topic",
+      "label": "빔 탐색·코드북"
+    },
+    {
+      "id": "csi",
+      "type": "research_topic",
+      "label": "CSI 추정·피드백"
+    },
+    {
+      "id": "mimo",
+      "type": "research_topic",
+      "label": "Massive MIMO·사용자 선택"
+    },
+    {
+      "id": "channel",
+      "type": "research_topic",
+      "label": "이동 채널·채널 추정"
+    },
+    {
+      "id": "detection",
+      "type": "research_topic",
+      "label": "등화·심볼 검출"
+    },
+    {
+      "id": "lowpower",
+      "type": "research_topic",
+      "label": "저전력·후방산란"
+    },
+    {
+      "id": "storage",
+      "type": "research_topic",
+      "label": "저장장치 채널 신호처리"
+    },
+    {
+      "id": "c2025otfs",
+      "type": "publication_listing",
+      "label": "OTFS의 프레임 분할과 검출 복잡도 연구",
+      "year": 2025,
+      "source": "conference",
+      "locator": "Domestic #4",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    },
+    {
+      "id": "c2024ftn",
+      "type": "publication_listing",
+      "label": "시변 페이딩에 대응하는 SVD 프리코딩·FTN 연구",
+      "year": 2024,
+      "source": "conference",
+      "locator": "Domestic #6",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    },
+    {
+      "id": "c2025fbmc",
+      "type": "publication_listing",
+      "label": "순환 이동 블록 QAM-FBMC와 2단계 검출 연구",
+      "year": 2025,
+      "source": "conference",
+      "locator": "International #1",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    },
+    {
+      "id": "c2025beam",
+      "type": "publication_listing",
+      "label": "DNN을 활용한 계층적 빔 코드북 연구",
+      "year": 2025,
+      "source": "conference",
+      "locator": "Domestic #3",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    },
+    {
+      "id": "c2025feedback",
+      "type": "publication_listing",
+      "label": "DNN을 활용한 빔 그룹 피드백 연구",
+      "year": 2025,
+      "source": "conference",
+      "locator": "Domestic #1",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    },
+    {
+      "id": "j2023csi",
+      "type": "publication_listing",
+      "label": "확률분포를 활용하는 Massive MIMO의 CSI 피드백 연구",
+      "year": 2023,
+      "source": "journal",
+      "locator": "International #1",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    },
+    {
+      "id": "j2021doppler",
+      "type": "publication_listing",
+      "label": "고속철도에서 RSRP·학습 기반 도플러 추정 연구",
+      "year": 2021,
+      "source": "journal",
+      "locator": "International #4",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    },
+    {
+      "id": "j2019csi",
+      "type": "publication_listing",
+      "label": "오류·지연을 고려한 오토인코더 CSI 피드백 연구",
+      "year": 2019,
+      "source": "journal",
+      "locator": "International #15",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    },
+    {
+      "id": "j2020lis",
+      "type": "publication_listing",
+      "label": "LIS의 전송률·채널 하드닝 분석 연구",
+      "year": 2020,
+      "source": "journal",
+      "locator": "International #6",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    },
+    {
+      "id": "c2020backscatter",
+      "type": "publication_listing",
+      "label": "후방산란 전송에 다중 안테나를 적용한 연구",
+      "year": 2020,
+      "source": "conference",
+      "locator": "Domestic #21",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    },
+    {
+      "id": "p2024otfs",
+      "type": "patent_listing",
+      "label": "OTFS 압축·복구 관련 국내 등록 특허",
+      "year": 2024,
+      "source": "patents",
+      "locator": "Domestic 등록 #1; 10-2745104",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    },
+    {
+      "id": "p2022backscatter",
+      "type": "patent_listing",
+      "label": "후방산란 통신 관련 국내 등록 특허",
+      "year": 2022,
+      "source": "patents",
+      "locator": "Domestic 등록 #4; 10-2466739",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    },
+    {
+      "id": "j2019storage",
+      "type": "publication_listing",
+      "label": "홀로그래픽 저장장치 정렬 오차·MLP 등화 연구",
+      "year": 2019,
+      "source": "journal",
+      "locator": "International #11",
+      "evidence_level": "website_metadata_only",
+      "full_text_reviewed": false
+    }
+  ],
+  "edges": [
+    {
+      "from": "c2025otfs",
+      "to": "otfs",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "conference",
+        "locator": "Domestic #4"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "c2025otfs",
+      "to": "detection",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "conference",
+        "locator": "Domestic #4"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "c2024ftn",
+      "to": "ftn",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "conference",
+        "locator": "Domestic #6"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "c2024ftn",
+      "to": "channel",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "conference",
+        "locator": "Domestic #6"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "c2025fbmc",
+      "to": "waveform",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "conference",
+        "locator": "International #1"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "c2025fbmc",
+      "to": "detection",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "conference",
+        "locator": "International #1"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "c2025beam",
+      "to": "beam",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "conference",
+        "locator": "Domestic #3"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "c2025feedback",
+      "to": "beam",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "conference",
+        "locator": "Domestic #1"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "c2025feedback",
+      "to": "csi",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "conference",
+        "locator": "Domestic #1"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "j2023csi",
+      "to": "csi",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "journal",
+        "locator": "International #1"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "j2023csi",
+      "to": "mimo",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "journal",
+        "locator": "International #1"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "j2021doppler",
+      "to": "channel",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "journal",
+        "locator": "International #4"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "j2019csi",
+      "to": "csi",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "journal",
+        "locator": "International #15"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "j2019csi",
+      "to": "mimo",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "journal",
+        "locator": "International #15"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "j2020lis",
+      "to": "mimo",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "journal",
+        "locator": "International #6"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "c2020backscatter",
+      "to": "lowpower",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "conference",
+        "locator": "Domestic #21"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "c2020backscatter",
+      "to": "mimo",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "conference",
+        "locator": "Domestic #21"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "p2024otfs",
+      "to": "otfs",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "patents",
+        "locator": "Domestic 등록 #1; 10-2745104"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "p2022backscatter",
+      "to": "lowpower",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "patents",
+        "locator": "Domestic 등록 #4; 10-2466739"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "j2019storage",
+      "to": "storage",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "journal",
+        "locator": "International #11"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    },
+    {
+      "from": "j2019storage",
+      "to": "detection",
+      "relation": "topic_indicated_by_metadata",
+      "provenance": {
+        "source": "journal",
+        "locator": "International #11"
+      },
+      "status": "title_based_topic_mapping",
+      "human_validated": false
+    }
+  ],
+  "project_history": {
+    "status": "not_obtained",
+    "note": "검토한 공개 경로에서 수행 과제의 명칭·기간·역할을 확인하지 못함. 미수행을 의미하지 않음."
+  },
+  "not_established": [
+    "현재 인력·장비·실험 가능 여부",
+    "논문 세부 알고리즘과 정량 성능",
+    "최근 비공개 실적과 AFDM 연구의 공식 실적 편입",
+    "신규 공고별 관련성·신청 자격"
+  ],
+  "matching_policy": {
+    "unit": "세부 RFP 요구사항",
+    "candidate_retrieval": "다국어 의미 검색으로 후보 확보",
+    "evidence": "연구 문제·방법·환경·성과물의 구체적인 대응 관계를 근거로 재평가",
+    "generic_terms": "AI·통신·네트워크만 공유하는 경로는 추천 근거로 사용하지 않음",
+    "eligibility": "연구 관련성과 별도로 충족·불충족·미확인 기록",
+    "history": "논문·특허·수행 사업은 별도 유형으로 보존",
+    "recency": "발표 시점을 기록하되 오래된 실적의 현재 활용 가능성은 사용자 검토",
+    "feedback": "관련·무관·확장 후보와 사유를 저장하고 검증 전에는 자동 기준 변경 금지",
+    "evaluation": "기존 필터·의미 검색·그래프 결합을 분리된 평가 집합에서 비교"
+  }
+}

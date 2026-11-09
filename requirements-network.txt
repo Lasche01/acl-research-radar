@@ -1,0 +1,2 @@
+# Optional native system certificate verification. TLS verification stays enabled.
+truststore>=0.10,<0.11

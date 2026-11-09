@@ -1,0 +1,182 @@
+[
+  {
+    "id": "iris",
+    "name": "IRIS",
+    "url": "https://www.iris.go.kr/contents/retrieveBsnsAncmBtinSituListView.do",
+    "detail_pattern": "retrieveBsnsAncmView",
+    "enabled": true,
+    "group": "기본 9개",
+    "note": "IRIS 클릭 함수의 공고 번호로 상세 주소를 복원합니다. 파일 클릭형 첨부 지원. 총건수 제한 없이 연속 탐색, 중지 후 대기 작업 이어서 처리."
+  },
+  {
+    "id": "iitp",
+    "name": "IITP",
+    "url": "https://www.iitp.kr/web/lay1/program/S1T44C51/iris/list.do",
+    "detail_pattern": "view|detail|ancmId",
+    "enabled": true,
+    "group": "기본 9개",
+    "note": "정적 HTML 수집 후보 경로. 실사이트 전체 수집 검증 전이며 동적 목록은 검토 필요로 표시합니다."
+  },
+  {
+    "id": "etri",
+    "name": "ETRI",
+    "url": "https://pcm.etri.re.kr/pcmx/comm/anno/annoList.do",
+    "detail_pattern": "annoView|annoDetail|view|detail",
+    "enabled": true,
+    "group": "기본 9개",
+    "note": "정적 HTML 수집 후보 경로. 실사이트 전체 수집 검증 전이며 동적 목록은 검토 필요로 표시합니다."
+  },
+  {
+    "id": "koita",
+    "name": "KOITA",
+    "url": "https://www.koita.or.kr/board/commBoardGovRnDList.do",
+    "detail_pattern": "View|view|detail",
+    "enabled": true,
+    "group": "기본 9개",
+    "note": "KOITA page_move 공고 링크와 페이지 링크를 해석합니다. 총건수 제한 없이 연속 탐색, 중지 후 대기 작업 이어서 처리."
+  },
+  {
+    "id": "ntis",
+    "name": "NTIS",
+    "url": "https://www.ntis.go.kr/rndgate/eg/un/ra/mng.do",
+    "detail_pattern": "view.do",
+    "enabled": true,
+    "group": "기본 9개",
+    "note": "정적 HTML 수집 후보 경로. 실사이트 전체 수집 검증 전이며 동적 목록은 검토 필요로 표시합니다."
+  },
+  {
+    "id": "add",
+    "name": "ADD 제안서공모",
+    "url": "https://www.add.re.kr/kps/publicNtis/ntisList?menuId=MENU02201",
+    "detail_pattern": "ntisView",
+    "enabled": true,
+    "group": "기본 9개",
+    "note": "정적 HTML 수집 후보 경로. 실사이트 전체 수집 검증 전이며 동적 목록은 검토 필요로 표시합니다."
+  },
+  {
+    "id": "nrf",
+    "name": "NRF",
+    "url": "https://www.nrf.re.kr/page/362?menuNo=362&bizNotGubn=guide",
+    "detail_pattern": "view|postNo",
+    "enabled": true,
+    "group": "기본 9개",
+    "note": "정적 HTML 수집 후보 경로. 실사이트 전체 수집 검증 전이며 동적 목록은 검토 필요로 표시합니다."
+  },
+  {
+    "id": "nipa",
+    "name": "NIPA",
+    "url": "https://www.nipa.kr/home/2-2",
+    "detail_pattern": "view|detail|boardNo",
+    "enabled": true,
+    "group": "기본 9개",
+    "note": "/home/2-2/게시물번호 형식의 상세 링크와 첨부를 수집합니다. 총건수 제한 없이 연속 탐색, 중지 후 대기 작업 이어서 처리."
+  },
+  {
+    "id": "kca",
+    "name": "KCA",
+    "url": "https://www.kca.kr/boardList.do?boardId=NOTICE&pageId=www47",
+    "detail_pattern": "boardView|view|boardSeq",
+    "enabled": true,
+    "group": "기본 9개",
+    "note": "정적 HTML 수집 후보 경로. 실사이트 전체 수집 검증 전이며 동적 목록은 검토 필요로 표시합니다."
+  },
+  {
+    "id": "add_news",
+    "name": "ADD 공지사항",
+    "url": "https://www.add.re.kr/board?menuId=MENU02198&siteId=SITE00002",
+    "detail_pattern": "view|boardView",
+    "enabled": false,
+    "group": "ADD 확장",
+    "note": "정적 HTML 수집 후보 경로. 실사이트 전체 수집 검증 전이며 동적 목록은 검토 필요로 표시합니다."
+  },
+  {
+    "id": "icmtc",
+    "name": "민군협력진흥원",
+    "url": "https://www.icmtc.re.kr/board?menuId=MENU00333",
+    "detail_pattern": "view|boardView",
+    "enabled": false,
+    "group": "ADD 확장",
+    "note": "정적 HTML 수집 후보 경로. 실사이트 전체 수집 검증 전이며 동적 목록은 검토 필요로 표시합니다."
+  },
+  {
+    "id": "dratri",
+    "name": "국방신속획득기술연구원",
+    "url": "https://www.add.re.kr/menu?menuId=MENU03062",
+    "detail_pattern": "view|boardView|ntisView",
+    "enabled": false,
+    "group": "ADD 확장",
+    "note": "신속원 소개 첫 화면 대신 공식 공지사항 목록을 확인합니다."
+  },
+  {
+    "id": "dapa",
+    "name": "방위사업청",
+    "url": "https://www.dapa.go.kr/dapa/doc/selectDocList.do?menuSeq=3031&bbsSeq=443",
+    "detail_pattern": "selectDoc|view|ntt",
+    "enabled": false,
+    "group": "ADD 확장",
+    "note": "fn_selectDoc 게시물 번호만 수집합니다. 분류·전체 선택 메뉴는 제외합니다."
+  },
+  {
+    "id": "future",
+    "name": "미래도전국방기술",
+    "url": "https://www.dapa.go.kr/dapa/index.do?menuSeq=4089",
+    "detail_pattern": "view|selectDoc",
+    "enabled": false,
+    "group": "ADD 확장",
+    "note": "사업 안내 페이지입니다. 게시물 번호가 있는 공고 링크만 수집합니다."
+  },
+  {
+    "id": "rapid",
+    "name": "신속시범사업",
+    "url": "https://www.dapa.go.kr/dapa/index.do?menuSeq=4090",
+    "detail_pattern": "view|selectDoc",
+    "enabled": false,
+    "group": "ADD 확장",
+    "note": "사업 안내 페이지입니다. 게시물 번호가 있는 공고 링크만 수집합니다."
+  },
+  {
+    "id": "dtims",
+    "name": "DTiMS 과제공고",
+    "url": "https://dtims.krit.re.kr/vps/OINF_CtPrjNotiList.do",
+    "detail_pattern": "View|Detail",
+    "enabled": false,
+    "group": "ADD 확장",
+    "note": "과제공고 행의 ctRndIden 번호로 상세·첨부 주소를 복원합니다. 마감된 과거 공고도 포함할 수 있습니다."
+  },
+  {
+    "id": "dtims_rnd",
+    "name": "DTiMS 수행과제",
+    "url": "https://dtims.krit.re.kr/vps/OINF_RndProjList.do",
+    "detail_pattern": "View|Detail",
+    "enabled": false,
+    "group": "ADD 확장",
+    "note": "수행 중 과제 조회 페이지입니다. 신규 과제 모집 공고 목록과 다르며 현재 상세 수집 어댑터가 없습니다."
+  },
+  {
+    "id": "krit",
+    "name": "KRIT PMS",
+    "url": "https://pms.krit.re.kr/",
+    "detail_pattern": "View|view|detail",
+    "enabled": false,
+    "group": "ADD 확장",
+    "note": "PMS 첫 화면입니다. 현재 공개 공고 목록용 어댑터가 없습니다."
+  },
+  {
+    "id": "d2b",
+    "name": "국방전자조달",
+    "url": "https://www.d2b.go.kr/index.do",
+    "detail_pattern": "view|detail",
+    "enabled": false,
+    "group": "ADD 확장",
+    "note": "정적 HTML 수집 후보 경로. 실사이트 전체 수집 검증 전이며 동적 목록은 검토 필요로 표시합니다."
+  },
+  {
+    "id": "g2b",
+    "name": "나라장터",
+    "url": "https://www.g2b.go.kr/",
+    "detail_pattern": "view|detail",
+    "enabled": false,
+    "group": "ADD 확장",
+    "note": "조달 시스템 첫 화면입니다. 현재 공개 공고용 API 연동이 없습니다."
+  }
+]

@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "acl-briefing"
+version = "0.7.0"
+description = "Evidence-linked research opportunity triage for Yonsei ACL"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+pdf = ["pypdf>=6.0,<7"]
+network = ["truststore>=0.10,<0.11"]
+
+[project.scripts]
+acl-briefing = "aclbrief.__main__:main"
+
+[tool.setuptools.package-data]
+aclbrief = ["static/*", "data/*.json"]
